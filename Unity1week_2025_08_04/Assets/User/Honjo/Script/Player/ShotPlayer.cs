@@ -6,45 +6,64 @@ namespace Honjo
 {
     public class ShotPlayer : MonoBehaviour
     {
-        public Camera mainCamera;
-        public float forcePower = 10f;
+        public float powerMultiplier = 10f;
+        public float maxPower = 20f;
+        public LineRenderer lineRenderer;
+
+        private Vector3 dragStartWorld;
+        private bool isDragging = false;
         private Rigidbody rb;
+        private Camera cam;
 
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-            if (mainCamera == null)
-            {
-                mainCamera = Camera.main;
-            }
+            cam = Camera.main;
+        }
+
+        void OnMouseDown()
+        {
+            if (rb.velocity.magnitude > 0.1f) return;
+
+            isDragging = true;
+            dragStartWorld = GetMouseWorldPoint();
+        }
+
+        void OnMouseUp()
+        {
+            if (!isDragging) return;
+
+            isDragging = false;
+
+            Vector3 dragEndWorld = GetMouseWorldPoint();
+            Vector3 forceDirection = dragStartWorld - dragEndWorld;
+            Vector3 force = Vector3.ClampMagnitude(forceDirection * powerMultiplier, maxPower);
+
+            rb.AddForce(force, ForceMode.Impulse);
+
+            if (lineRenderer) lineRenderer.enabled = false;
         }
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (isDragging && lineRenderer)
             {
-                Vector3 direction = GetCameraCenterDirectionOnXZ();
-                rb.AddForce(direction * forcePower, ForceMode.Impulse);
+                lineRenderer.enabled = true;
+                lineRenderer.SetPosition(0, transform.position);
+                lineRenderer.SetPosition(1, dragStartWorld);
             }
 
-            // デバッグ可視化
-            Debug.DrawRay(transform.position, GetCameraCenterDirectionOnXZ() * 5f, Color.green);
+            // Debug用RayをSceneビューに表示
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
         }
 
-        Vector3 GetCameraCenterDirectionOnXZ()
+        Vector3 GetMouseWorldPoint()
         {
-            Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // 画面中央のRay
-            Plane ground = new Plane(Vector3.up, transform.position); // Y=オブジェクトの高さの平面
-
-            if (ground.Raycast(ray, out float distance))
-            {
-                Vector3 hitPoint = ray.GetPoint(distance); // 画面中央がXZ平面と交差する点
-                Vector3 direction = hitPoint - transform.position;
-                direction.y = 0; // XZ方向だけに制限
-                return direction.normalized;
-            }
-
-            return Vector3.zero;
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            Plane plane = new Plane(Vector3.up, Vector3.zero); // Y=0の平面
+            plane.Raycast(ray, out float enter);
+            return ray.GetPoint(enter);
         }
     }
 }
