@@ -77,6 +77,18 @@ namespace Honjo
 
             rb.AddForce(transform.forward * power, ForceMode.Force);
         }
+
+
+        void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Bumper")) // B‚É"TargetB"ƒ^ƒO‚ð‚Â‚¯‚é
+            {
+                float randomY = Random.Range(0f, 360f);
+                Vector3 currentEuler = transform.eulerAngles;
+                transform.eulerAngles = new Vector3(currentEuler.x, randomY, currentEuler.z);
+                rb.AddForce(transform.forward * 50, ForceMode.Impulse);
+            }
+        }
     }
 }
 
