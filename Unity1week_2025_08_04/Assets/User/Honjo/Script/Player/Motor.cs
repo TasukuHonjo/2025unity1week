@@ -82,16 +82,16 @@ namespace Honjo
         }
 
 
-        void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.CompareTag("Bumper")) // Bに"TargetB"タグをつける
-            {
-                float randomY = Random.Range(0f, 360f);
-                Vector3 currentEuler = transform.eulerAngles;
-                transform.eulerAngles = new Vector3(currentEuler.x, randomY, currentEuler.z);
-                rb.AddForce(transform.forward * 50, ForceMode.Impulse);
-            }
-        }
+        //void OnCollisionEnter(Collision collision)
+        //{
+        //    if (collision.gameObject.CompareTag("Bumper")) // Bに"TargetB"タグをつける
+        //    {
+        //        float randomY = Random.Range(0f, 360f);
+        //        Vector3 currentEuler = transform.eulerAngles;
+        //        transform.eulerAngles = new Vector3(currentEuler.x, randomY, currentEuler.z);
+        //        rb.AddForce(transform.forward * 50, ForceMode.Impulse);
+        //    }
+        //}
     }
 }
 

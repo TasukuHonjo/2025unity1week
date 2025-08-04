@@ -41,7 +41,7 @@ namespace Honjo
             // スムーズに追従（Lerp）
             transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed * Time.deltaTime);
 
-            transform.LookAt(target.position);
+            //transform.LookAt(target.position);
         }
     }
 }
