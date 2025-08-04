@@ -15,8 +15,8 @@ namespace Honjo
 
         [SerializeField] bool startFg = false;
 
-        [SerializeField] Vector2 vec2 = new Vector2();//移動する方向
         [SerializeField] float power = 5;//動かすパワー
+        Transform cameraTransform = null;
 
         private void Awake()
         {
@@ -26,6 +26,7 @@ namespace Honjo
         private void Start()
         {
             time = 0;
+            cameraTransform = Camera.main.transform;
         }
 
         private void Update()
@@ -37,7 +38,30 @@ namespace Honjo
                 rb.velocity = rb.velocity.normalized * maxSpeed;
             }
 
-            
+            if (!startFg)
+            {
+                if (cameraTransform == null) return;
+
+                // カメラ→自分 のベクトルを取得
+                Vector3 toCamera = cameraTransform.position - transform.position;
+
+                // 反対方向を向く（背を向ける）
+                Vector3 lookDirection = -toCamera.normalized;
+
+                // Y軸はそのままで水平回転だけに限定（任意）
+                lookDirection.y = 0f;
+
+                if (lookDirection != Vector3.zero)
+                {
+                    transform.rotation = Quaternion.LookRotation(lookDirection);
+                }
+            }
+
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                if(!startFg)startFg = true;
+            }
         }
 
         private void FixedUpdate()
