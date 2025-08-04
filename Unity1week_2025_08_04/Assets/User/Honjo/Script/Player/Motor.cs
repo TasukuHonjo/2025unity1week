@@ -74,6 +74,9 @@ namespace Honjo
                 startFg = false;
                 return;
             }
+            // Debug用RayをSceneビューに表示
+            Ray ray = new Ray(transform.position,transform.forward);
+            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
 
             rb.AddForce(transform.forward * power, ForceMode.Force);
         }

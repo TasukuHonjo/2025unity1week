@@ -4,11 +4,11 @@ using System.Collections;
 public class MovementControl : MonoBehaviour {
 	public WheelCollider[] wheelColliders = new WheelCollider[4];
 	public Transform[] tyreMeshes = new Transform[4];
-	public float maxTorque = 50.0f;
+	public float maxTorque = 150.0f;
 	private Rigidbody m_rigidbody;
 	public Transform centerOfMass;
 
-	void start()
+	void Start()
 	{
 		m_rigidbody = GetComponent<Rigidbody>();
 		m_rigidbody.centerOfMass = centerOfMass.localPosition;
