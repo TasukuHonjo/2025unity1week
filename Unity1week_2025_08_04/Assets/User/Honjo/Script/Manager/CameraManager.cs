@@ -2,21 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+namespace Honjo
 {
-    [SerializeField] private Camera topViewCamera = null;
-    [SerializeField] private Camera driveCamera = null;
-    public Camera currentCamera = null;
-
-    private void Update()
+    public class CameraManager : MonoBehaviour
     {
-        if(topViewCamera.depth > driveCamera.depth)
+        [SerializeField] private Camera topViewCamera = null;
+        [SerializeField] private Camera driveCamera = null;
+        public Camera currentCamera = null;
+
+        private void Update()
         {
-            currentCamera = topViewCamera;
-        }
-        else
-        {
-            currentCamera = driveCamera;
+            if (topViewCamera.depth > driveCamera.depth)
+            {
+                currentCamera = topViewCamera;
+            }
+            else
+            {
+                currentCamera = driveCamera;
+            }
         }
     }
+
 }
+
