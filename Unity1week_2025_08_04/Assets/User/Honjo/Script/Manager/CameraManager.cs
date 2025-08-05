@@ -10,6 +10,14 @@ namespace Honjo
         [SerializeField] private Camera driveCamera = null;
         public Camera currentCamera = null;
 
+        void Awake()
+        {
+            if (currentCamera == null)
+            {
+                currentCamera = Camera.main;
+            }
+        }
+
         private void Update()
         {
             if (topViewCamera.depth > driveCamera.depth)
