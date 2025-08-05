@@ -41,8 +41,7 @@ namespace Honjo
 
             if (Input.GetMouseButtonDown(0))
             {
-                if(!startFg)startFg = true;
-                topViewCamera.depth = -2;
+                DriveFg();
             }
         }
 
@@ -63,6 +62,11 @@ namespace Honjo
             rb.AddForce(transform.forward * power, ForceMode.Force);
         }
 
+        public void DriveFg()
+        {
+            if (!startFg) startFg = true;
+            topViewCamera.depth = -2;
+        }
     }
 }
 
