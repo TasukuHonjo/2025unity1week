@@ -16,7 +16,6 @@ namespace Honjo
         [SerializeField] bool startFg = false;
 
         [SerializeField] float power = 5;//動かすパワー
-        Transform cameraTransform = null;
 
         private void Awake()
         {
@@ -26,7 +25,6 @@ namespace Honjo
         private void Start()
         {
             time = 0;
-            cameraTransform = Camera.main.transform;
         }
 
         private void Update()
@@ -36,25 +34,6 @@ namespace Honjo
             {
                 // 現在の速度方向を保ったまま上限スピードに制限
                 rb.velocity = rb.velocity.normalized * maxSpeed;
-            }
-
-            if (!startFg)
-            {
-                if (cameraTransform == null) return;
-
-                // カメラ→自分 のベクトルを取得
-                Vector3 toCamera = cameraTransform.position - transform.position;
-
-                // 反対方向を向く（背を向ける）
-                Vector3 lookDirection = -toCamera.normalized;
-
-                // Y軸はそのままで水平回転だけに限定（任意）
-                lookDirection.y = 0f;
-
-                if (lookDirection != Vector3.zero)
-                {
-                    transform.rotation = Quaternion.LookRotation(lookDirection);
-                }
             }
 
 
@@ -81,17 +60,6 @@ namespace Honjo
             rb.AddForce(transform.forward * power, ForceMode.Force);
         }
 
-
-        //void OnCollisionEnter(Collision collision)
-        //{
-        //    if (collision.gameObject.CompareTag("Bumper")) // Bに"TargetB"タグをつける
-        //    {
-        //        float randomY = Random.Range(0f, 360f);
-        //        Vector3 currentEuler = transform.eulerAngles;
-        //        transform.eulerAngles = new Vector3(currentEuler.x, randomY, currentEuler.z);
-        //        rb.AddForce(transform.forward * 50, ForceMode.Impulse);
-        //    }
-        //}
     }
 }
 
