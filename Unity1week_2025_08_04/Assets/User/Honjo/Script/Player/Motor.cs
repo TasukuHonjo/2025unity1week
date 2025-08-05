@@ -9,13 +9,15 @@ namespace Honjo
     {
         Rigidbody rb = null;
 
-        [SerializeField]float maxSpeed = 10;//速度上限
+        [SerializeField] float maxSpeed = 10;//速度上限
         [SerializeField] float moveTime = 5;//何秒動くか
         float time = 0;
 
         [SerializeField] bool startFg = false;
 
         [SerializeField] float power = 5;//動かすパワー
+
+        [SerializeField]Camera topViewCamera = null;
 
         private void Awake()
         {
@@ -40,6 +42,7 @@ namespace Honjo
             if (Input.GetMouseButtonDown(0))
             {
                 if(!startFg)startFg = true;
+                topViewCamera.depth = -2;
             }
         }
 

@@ -192,6 +192,7 @@ MonoBehaviour:
   moveTime: 5
   startFg: 0
   power: 250
+  topViewCamera: {fileID: 0}
 --- !u!54 &47602866
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -842,9 +843,8 @@ GameObject:
   - component: {fileID: 697250153}
   - component: {fileID: 697250152}
   - component: {fileID: 697250151}
-  - component: {fileID: 697250155}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: DriveCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -924,21 +924,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1732873861}
   m_LocalEulerAnglesHint: {x: 20.806, y: 0, z: 0}
---- !u!114 &697250155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697250150}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80cd543a3a1af1f4d8c3c8f966ef6fac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1732873861}
-  rotationSpeed: 5
-  followSpeed: 10
 --- !u!1 &724504901
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,7 +942,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &724504902
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1430,6 +1415,7 @@ MonoBehaviour:
   moveTime: 3
   startFg: 0
   power: 250
+  topViewCamera: {fileID: 0}
 --- !u!114 &856482594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1673,7 +1659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1197746211
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1856,6 +1842,7 @@ MonoBehaviour:
   moveTime: 5
   startFg: 0
   power: 1500
+  topViewCamera: {fileID: 0}
 --- !u!1 &1393957135
 GameObject:
   m_ObjectHideFlags: 0
@@ -1980,7 +1967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1395636360
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2292,6 +2279,7 @@ MonoBehaviour:
   moveTime: 20
   startFg: 0
   power: 350
+  topViewCamera: {fileID: 2117689177}
 --- !u!54 &1732873859
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2588,6 +2576,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1843721111}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1851064155
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1851064157}
+  - component: {fileID: 1851064156}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1851064156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851064155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ceb28dee81ad664cb0b51290c609241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topViewCamera: {fileID: 2117689177}
+  driveCamera: {fileID: 697250152}
+  currentCamera: {fileID: 0}
+--- !u!4 &1851064157
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851064155}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1861566965
 GameObject:
   m_ObjectHideFlags: 0
@@ -3215,7 +3250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &2117689176
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3223,7 +3258,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117689175}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &2117689177
 Camera:
   m_ObjectHideFlags: 0
@@ -3312,3 +3347,4 @@ SceneRoots:
   - {fileID: 1120996704}
   - {fileID: 1732873861}
   - {fileID: 1794631321}
+  - {fileID: 1851064157}
