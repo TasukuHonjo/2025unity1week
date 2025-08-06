@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: 200659803}
   - component: {fileID: 200659808}
   - component: {fileID: 200659809}
+  - component: {fileID: 200659810}
   m_Layer: 0
   m_Name: man
   m_TagString: Salaryman
@@ -648,6 +649,18 @@ MonoBehaviour:
   cameraTransform: {fileID: 697250153}
   forwardOffset: 15
   knockbackForce: 10
+--- !u!114 &200659810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200659801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391f62c27f599f8469ec17da31aebaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &316252377
 GameObject:
   m_ObjectHideFlags: 0
@@ -2098,6 +2111,7 @@ GameObject:
   - component: {fileID: 1175116395}
   - component: {fileID: 1175116394}
   - component: {fileID: 1175116393}
+  - component: {fileID: 1175116400}
   m_Layer: 0
   m_Name: man (4)
   m_TagString: Salaryman
@@ -2266,6 +2280,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1175116400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175116392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391f62c27f599f8469ec17da31aebaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1187047263
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,6 +2307,7 @@ GameObject:
   - component: {fileID: 1187047266}
   - component: {fileID: 1187047265}
   - component: {fileID: 1187047264}
+  - component: {fileID: 1187047271}
   m_Layer: 0
   m_Name: man (1)
   m_TagString: Salaryman
@@ -2449,6 +2476,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1187047271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187047263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391f62c27f599f8469ec17da31aebaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1197746210
 GameObject:
   m_ObjectHideFlags: 0
@@ -2561,6 +2600,7 @@ GameObject:
   - component: {fileID: 1298222539}
   - component: {fileID: 1298222538}
   - component: {fileID: 1298222537}
+  - component: {fileID: 1298222544}
   m_Layer: 0
   m_Name: man (2)
   m_TagString: Salaryman
@@ -2729,6 +2769,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1298222544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298222536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391f62c27f599f8469ec17da31aebaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1361775796
 GameObject:
   m_ObjectHideFlags: 0
@@ -3835,6 +3887,7 @@ GameObject:
   - component: {fileID: 1880023096}
   - component: {fileID: 1880023095}
   - component: {fileID: 1880023094}
+  - component: {fileID: 1880023101}
   m_Layer: 0
   m_Name: man (3)
   m_TagString: Salaryman
@@ -4003,6 +4056,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1880023101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880023093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391f62c27f599f8469ec17da31aebaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1891927579
 GameObject:
   m_ObjectHideFlags: 0
