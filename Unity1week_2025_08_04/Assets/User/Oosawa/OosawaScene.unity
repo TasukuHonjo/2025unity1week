@@ -479,6 +479,7 @@ GameObject:
   - component: {fileID: 200659804}
   - component: {fileID: 200659803}
   - component: {fileID: 200659802}
+  - component: {fileID: 200659808}
   m_Layer: 0
   m_Name: man
   m_TagString: Salaryman
@@ -498,12 +499,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a05725f8fa0bd94aa143bfb96b42f33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSprite: {fileID: 0}
-  hitSprite: {fileID: 0}
+  defaultSprite: {fileID: 21300000, guid: d56b5b766688a704389f2fad6c219fb8, type: 3}
+  hitSprite: {fileID: 21300000, guid: d0d7632e5958a314d90dc67ea6185b28, type: 3}
   rotateDuration: 0.3
   destroyDelay: 1
-  launchForce: 5
+  launchForce: 10
   stopAfterSeconds: 0.3
+  cameraTransform: {fileID: 697250153}
+  forwardOffset: 10
 --- !u!114 &200659803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,6 +620,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &200659808
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200659801}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &316252377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,7 +1508,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: ccb9255796f85d8438739116864d17b4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.97
+      value: 0.47
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: ccb9255796f85d8438739116864d17b4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2832,7 +2862,7 @@ Transform:
   m_GameObject: {fileID: 1732873856}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.21507625, z: 0, w: 0.9765973}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.12, y: 0, z: -0.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

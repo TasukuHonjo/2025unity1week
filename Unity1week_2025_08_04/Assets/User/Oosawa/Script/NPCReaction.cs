@@ -21,12 +21,11 @@ namespace Oosawa
         private Collider col;                  // 当たり判定用
         private bool alreadyHit = false;       // 二重反応防止フラグ
 
-        private bool followCameraMovement = false; // カメラの移動量をNPCに加えるかどうか
+        [Header("カメラ（未指定ならMainCamera）")]
+        public Transform cameraTransform;
+        public float forwardOffset = 10f;       // カメラの前方向に何メートル出すか
 
-        private bool followCamera = false;       // カメラ追従するかどうか
-
-        private Vector3 initialCameraOffset;     // カメラの初期移動量（差分）
-        private Vector3 initialSelfPosition;     // 自分の位置を記録
+        private bool followCamera = false;     // カメラに追従するかどうか
 
         private void Awake()
         {
@@ -46,12 +45,21 @@ namespace Oosawa
             // トリガー判定有効化（Colliderはぶつからず中に入るだけ）
             if (col != null)
                 col.isTrigger = true;
+
+            // カメラが未設定ならMainCameraを使用
+            if (cameraTransform == null)
+            {
+                cameraTransform = Camera.main.transform;
+            }
         }
 
         private void OnTriggerEnter(Collider other)
         {
             // すでに処理されている or プレイヤー以外なら無視
             if (alreadyHit) return;
+
+            // カメラに追従するフラグを有効化
+            followCamera = true; 
 
             if (other.CompareTag("Player"))
             {
@@ -61,9 +69,6 @@ namespace Oosawa
                 if (col != null)
                     col.enabled = false;
 
-                // カメラ移動に追従開始
-                followCameraMovement = true;
-
                 // コルーチンで演出スタート
                 StartCoroutine(HandleHit());
             }
@@ -71,11 +76,14 @@ namespace Oosawa
 
         private void Update()
         {
-            // カメラが動いた分だけ位置を更新して追従
             if (followCamera)
             {
-                Vector3 cameraDelta = CameraMotionTracker.CameraOffsetSinceStart - initialCameraOffset;
-                transform.position = initialSelfPosition + cameraDelta;
+                // カメラの子に設定（ローカル位置を使いたいので false）
+                transform.SetParent(cameraTransform, false);
+
+                // カメラの前方向に forwardOffset 分だけ移動（ローカル空間）
+                transform.localPosition = new Vector3(0, 0, forwardOffset);
+                //transform.localPosition = new Vector3(0, 0, forwardOffset);
             }
         }
 
@@ -122,12 +130,11 @@ namespace Oosawa
             // タグに応じたスコア加算
             ScoreManager.Instance?.AddScoreByTag(gameObject.tag);
 
-            // カメラ追従を終了
-            followCameraMovement = false;
-
             // 一定時間後に削除
             Destroy(gameObject, destroyDelay);
+
+            // カメラ追従フラグを無効化
+            followCamera = false;
         }
     }
-
 }
