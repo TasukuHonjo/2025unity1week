@@ -23,9 +23,10 @@ namespace Oosawa
 
         [Header("カメラ（未指定ならMainCamera）")]
         public Transform cameraTransform;
-        public float forwardOffset = 10f;       // カメラの前方向に何メートル出すか
+        public float forwardOffset = 15f;       // カメラの前方向に何メートル出すか
 
-        private bool followCamera = false;     // カメラに追従するかどうか
+        private bool followCamera = false;      // カメラに追従するかどうか
+        public float knockbackForce = 10f;
 
         private void Awake()
         {
@@ -74,7 +75,7 @@ namespace Oosawa
             }
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (followCamera)
             {
@@ -82,22 +83,24 @@ namespace Oosawa
                 transform.SetParent(cameraTransform, false);
 
                 // カメラの前方向に forwardOffset 分だけ移動（ローカル空間）
-                transform.localPosition = new Vector3(0, 0, forwardOffset);
-                //transform.localPosition = new Vector3(0, 0, forwardOffset);
+                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, forwardOffset);
+
+
+                followCamera = false; // 一度だけ追従するためフラグをリセット
             }
         }
 
         private System.Collections.IEnumerator HandleHit()
         {
-            // ランダムに左上 or 右上へ飛ばす
+            // ランダムに左上または右上へ飛ばす
             Vector3 direction = (Random.value < 0.5f) ? new Vector3(-1f, 1f, 0f) : new Vector3(1f, 1f, 0f);
-            direction.Normalize();
+            direction.Normalize(); // 念のため正規化
 
             if (rb != null)
             {
-                rb.isKinematic = false;
-                rb.velocity = Vector3.zero;
-                rb.AddForce(direction * launchForce, ForceMode.Impulse);
+                rb.isKinematic = false; // 動かせるように
+                rb.velocity = Vector3.zero; // 念のため初期化
+                rb.AddForce(direction * launchForce, ForceMode.Impulse); // 力を加える
             }
 
             // 飛ばしたあと固定まで少し待機
