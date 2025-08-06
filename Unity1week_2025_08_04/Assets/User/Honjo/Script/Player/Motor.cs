@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 namespace Honjo
 {
@@ -17,16 +18,30 @@ namespace Honjo
 
         [SerializeField] float power = 5;//動かすパワー
 
+        private bool onesFg = false;//一回だけ
+
         [SerializeField]Camera topViewCamera = null;
+        private float chargeTime = 0;
+        [SerializeField]private float chargeMaxTime = 30;
+        [SerializeField] private float moveTimeMagnification = 1;
+        [SerializeField] Image timer;
+
+        private RotationY ry = null;
+        private DriveHandle dh = null;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
+            ry = GetComponent<RotationY>();
+            dh = GetComponent<DriveHandle>();
         }
 
         private void Start()
         {
             time = 0;
+            timer.fillAmount = 0;
+            ry.enabled = true;  //角度決めるフェーズ
+            dh.enabled = false; //運転のフェーズ
         }
 
         private void Update()
@@ -38,8 +53,19 @@ namespace Honjo
                 rb.velocity = rb.velocity.normalized * maxSpeed;
             }
 
+            if (startFg) { return; }
+            if (onesFg) { return; };
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
+            {
+                chargeTime += Time.deltaTime;
+                if(chargeTime > chargeMaxTime) { chargeTime = chargeMaxTime; }
+                float normalized = (chargeTime * moveTimeMagnification) / (chargeMaxTime * moveTimeMagnification);
+                normalized = Mathf.Clamp01(normalized); // 念のため 0?1 に制限
+                timer.fillAmount = normalized;
+            }
+
+            if (Input.GetMouseButtonUp(0))
             {
                 DriveFg();
             }
@@ -49,10 +75,18 @@ namespace Honjo
         {
             if (!startFg) return;
                 time += Time.fixedDeltaTime;
+
+            float normalized = (moveTime - time) / (chargeMaxTime * moveTimeMagnification);
+            normalized = Mathf.Clamp01(normalized); // 念のため 0?1 に制限
+            timer.fillAmount = normalized;
+
+
             if (time > moveTime) 
             {
                 time = 0;
                 startFg = false;
+                chargeTime = 0;
+                onesFg = true;
                 return;
             }
             // Debug用RayをSceneビューに表示
@@ -64,8 +98,12 @@ namespace Honjo
 
         public void DriveFg()
         {
+            moveTime = chargeTime * moveTimeMagnification;
             if (!startFg) startFg = true;
             topViewCamera.depth = -2;
+            ry.enabled = false;  //角度決めるフェーズ
+            dh.enabled = true; //運転のフェーズ
+            dh.SetTargetYRotation(transform.eulerAngles.y);
         }
     }
 }

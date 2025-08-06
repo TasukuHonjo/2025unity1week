@@ -55,6 +55,11 @@ namespace Honjo
                 lateClick -= Time.deltaTime;
             }
         }
+
+        public void SetTargetYRotation(float rotationY)
+        {
+            targetYRotation = rotationY;
+        }
     }
 }
 
