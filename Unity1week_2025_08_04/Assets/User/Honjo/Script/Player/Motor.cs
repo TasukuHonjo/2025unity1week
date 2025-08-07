@@ -25,13 +25,14 @@ namespace Honjo
         [SerializeField]private float chargeMaxTime = 30;
         [SerializeField] private float moveTimeMagnification = 1;
         [SerializeField] Image timer;
+        [SerializeField] RawImage miniMap;
 
         private RotationY ry = null;
         private DriveHandle dh = null;
 
-        [SerializeField]private Vector2 viewPortRectXY = Vector2.zero;
-        [SerializeField]private Vector2 viewPortRectWH = Vector2.zero;
-        private CameraManager camManager = null;
+        //[SerializeField]private Vector2 viewPortRectXY = Vector2.zero;
+        //[SerializeField]private Vector2 viewPortRectWH = Vector2.zero;
+        //private CameraManager camManager = null;
 
         private void Awake()
         {
@@ -47,7 +48,8 @@ namespace Honjo
             timer.fillAmount = 0;
             ry.enabled = true;  //角度決めるフェーズ
             dh.enabled = false; //運転のフェーズ
-            camManager = GameObject.Find("Managers").GetComponent<CameraManager>();
+            //camManager = GameObject.Find("Managers").GetComponent<CameraManager>();
+            miniMap.enabled = false;
         }
 
         private void Update()
@@ -107,9 +109,10 @@ namespace Honjo
         {
             moveTime = chargeTime * moveTimeMagnification;
             if (!startFg) startFg = true;
-            //topViewCamera.depth = -2;
-            camManager.SetDriveCamera();
-            topViewCamera.rect = new Rect(viewPortRectXY.x, viewPortRectXY.y, viewPortRectWH.x, viewPortRectWH.y);
+            topViewCamera.depth = -2;
+            //camManager.SetDriveCamera();
+            miniMap.enabled = true;
+            //topViewCamera.rect = new Rect(viewPortRectXY.x, viewPortRectXY.y, viewPortRectWH.x, viewPortRectWH.y);
             ry.enabled = false;  //角度決めるフェーズ
             dh.enabled = true; //運転のフェーズ
             dh.SetTargetYRotation(transform.eulerAngles.y);
