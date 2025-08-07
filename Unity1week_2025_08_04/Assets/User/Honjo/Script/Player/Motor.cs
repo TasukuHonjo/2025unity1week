@@ -29,6 +29,9 @@ namespace Honjo
         private RotationY ry = null;
         private DriveHandle dh = null;
 
+        [SerializeField]private Vector2 viewPortRectXY = Vector2.zero;
+        [SerializeField]private Vector2 viewPortRectWH = Vector2.zero;
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
@@ -100,7 +103,8 @@ namespace Honjo
         {
             moveTime = chargeTime * moveTimeMagnification;
             if (!startFg) startFg = true;
-            topViewCamera.depth = -2;
+            //topViewCamera.depth = -2;
+            topViewCamera.rect = new Rect(viewPortRectXY.x, viewPortRectXY.y, viewPortRectWH.x, viewPortRectWH.y);
             ry.enabled = false;  //角度決めるフェーズ
             dh.enabled = true; //運転のフェーズ
             dh.SetTargetYRotation(transform.eulerAngles.y);
