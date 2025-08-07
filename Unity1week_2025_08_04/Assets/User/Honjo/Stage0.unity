@@ -921,7 +921,7 @@ GameObject:
   - component: {fileID: 480602025}
   - component: {fileID: 480602027}
   m_Layer: 0
-  m_Name: BestTopViewCamera
+  m_Name: MiniMapCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -935,13 +935,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 480602024}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16856213, y: -0, z: -0, w: 0.985691}
-  m_LocalPosition: {x: -4.5474735e-13, y: 38.37, z: -39.160305}
+  m_LocalRotation: {x: 0.2200289, y: -0, z: -0, w: 0.9754933}
+  m_LocalPosition: {x: 0, y: 44.6, z: -42.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1126095854}
-  m_LocalEulerAnglesHint: {x: 19.408, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 25.421, y: 0, z: 0}
 --- !u!20 &480602027
 Camera:
   m_ObjectHideFlags: 0
@@ -2011,6 +2011,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1387137573}
   - {fileID: 858137465}
   - {fileID: 1010809995}
   - {fileID: 164339642}
@@ -2025,7 +2026,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126095847}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec174901efd3be5438e4ff75c47acb73, type: 3}
   m_Name: 
@@ -2034,6 +2035,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   dragObj: {fileID: 741259844}
+  maxDistance: 15
+  maxValue: 100
+  timer: {fileID: 100001134}
 --- !u!4 &1178645217 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7851300283611201371, guid: 6934983ab69953941be9cac85bf0ab8f, type: 3}
@@ -2354,12 +2358,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387137571}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38325566, y: 0.38194662, z: -0.17810462, w: 0.8218945}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.39694166, y: -0.31109014, z: 0.14506368, w: 0.85124433}
+  m_LocalPosition: {x: 8.169999, y: 2.53, z: 17.150002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1126095854}
   m_LocalEulerAnglesHint: {x: 50, y: 49.85, z: 0}
 --- !u!4 &1427759002 stripped
 Transform:
@@ -5966,7 +5970,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 397949938}
-  - {fileID: 1387137573}
   - {fileID: 400559304}
   - {fileID: 1962861802}
   - {fileID: 2031805696}

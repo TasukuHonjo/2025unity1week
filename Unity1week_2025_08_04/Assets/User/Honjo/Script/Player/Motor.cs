@@ -66,11 +66,11 @@ namespace Honjo
 
             if (Input.GetMouseButton(0))
             {
-                chargeTime += Time.deltaTime;
-                if(chargeTime > chargeMaxTime) { chargeTime = chargeMaxTime; }
-                float normalized = (chargeTime * moveTimeMagnification) / (chargeMaxTime * moveTimeMagnification);
-                normalized = Mathf.Clamp01(normalized); // îOÇÃÇΩÇﬂ 0?1 Ç…êßå¿
-                timer.fillAmount = normalized;
+                //chargeTime += Time.deltaTime;
+                //if(chargeTime > chargeMaxTime) { chargeTime = chargeMaxTime; }
+                //float normalized = (chargeTime * moveTimeMagnification) / (chargeMaxTime * moveTimeMagnification);
+                //normalized = Mathf.Clamp01(normalized); // îOÇÃÇΩÇﬂ 0?1 Ç…êßå¿
+                //timer.fillAmount = normalized;
             }
 
             if (Input.GetMouseButtonUp(0))
@@ -107,7 +107,7 @@ namespace Honjo
 
         public void DriveFg()
         {
-            moveTime = chargeTime * moveTimeMagnification;
+            moveTime = chargeMaxTime * moveTimeMagnification * timer.fillAmount;
             if (!startFg) startFg = true;
             topViewCamera.depth = -2;
             //camManager.SetDriveCamera();
