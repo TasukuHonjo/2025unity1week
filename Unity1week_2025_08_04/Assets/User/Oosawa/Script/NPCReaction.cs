@@ -4,85 +4,150 @@ using UnityEngine;
 
 namespace Oosawa
 {
-    using UnityEngine;
 
     public class NPCReaction : MonoBehaviour
     {
-        [Header("反応設定")]
-        public float forceMagnitude = 5f;
-        public float flyDuration = 1.2f;
-        public float destroyDelay = 3f;
+        [Header("スプライト設定")]
+        public Sprite beforeSprite; // 衝突前の見た目
+        public Sprite afterSprite;  // 衝突後の見た目
 
-        [Header("跳ねアニメーション")]
-        public AnimationCurve jumpCurve;
+        [SerializeField] private float rotateDuration = 0.3f;    // 回転アニメーションの時間
 
-        [Header("スプライト")]
-        public Sprite originalSprite;
-        public Sprite hitSprite;
+        //[Header("プレイヤー関連")]
+        //public float triggerDistance = 5f; // プレイヤーを検知する距離
 
+        [Header("吹き飛び挙動")]
+        public float blowForce = 30f;        // 水平方向の吹き飛び力
+        public float upwardForce = 2f;       // 上方向の跳ね力
+        public float stopDelay = 0.5f;       // 力を止めるまでの時間
+        public float destroyDelay = 1.5f;    // 消えるまでの時間
+
+        [Header("回転挙動")]
+        public float rotationSpeed = 400f; // Y軸回転速度（度/秒）
+
+        // 内部状態
+        private SpriteRenderer spriteRenderer;
         private Rigidbody rb;
-        private SpriteRenderer sr;
-        private bool isFlying = false;
-        private bool hasReacted = false;
-        private float elapsed = 0f;
-        private float rotationY = 0f;
+        private Transform player;
 
-        void Start()
+        void Awake()
         {
+            // 必要なコンポーネント取得
+            spriteRenderer = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody>();
-            sr = GetComponent<SpriteRenderer>();
 
-            if (originalSprite == null) originalSprite = sr.sprite;
-            sr.sprite = originalSprite;
+            // 初期スプライト設定
+            spriteRenderer.sprite = beforeSprite;
+
+            // プレイヤーのTransform取得（タグで検索）
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
         }
 
         void Update()
         {
-            if (isFlying)
+            //// まだ反応していない場合のみ、プレイヤーとの距離を測定
+            //if (!isTriggered && player != null)
+            //{
+            //    float distance = Vector3.Distance(transform.position, player.position);
+
+            //    // プレイヤーが指定距離に入ったら回転を開始
+            //    if (distance <= triggerDistance)
+            //    {
+
+            //    }
+            //}
+        }
+
+        // NPCをY軸で360度回転し、180度でスプライトを切り替える処理
+        private IEnumerator RotateAndSwitchSprite()
+        {
+            // 回転アニメーション（くるっと）
+            float elapsed = 0f;
+            Quaternion startRot = transform.rotation;
+            Quaternion endRot = Quaternion.Euler(0, 180, 0) * startRot;
+
+            spriteRenderer.sprite = afterSprite;
+
+            while (elapsed < rotateDuration)
             {
+                transform.rotation = Quaternion.Slerp(startRot, endRot, elapsed / rotateDuration);
                 elapsed += Time.deltaTime;
+                yield return null;
+            }
 
-                // 跳ねる動き
-                float y = jumpCurve.Evaluate(elapsed / flyDuration);
-                rb.velocity = new Vector3(rb.velocity.x, y * forceMagnitude, rb.velocity.z);
 
-                // 回転
-                float rotateStep = 360f * Time.deltaTime / flyDuration;
-                rotationY += rotateStep;
-                transform.Rotate(0, rotateStep, 0);
 
-                if (rotationY >= 180f && sr.sprite != hitSprite)
-                {
-                    sr.sprite = hitSprite;
-                }
+            //float rotated = 0f;
 
-                if (elapsed >= flyDuration)
-                {
-                    rb.velocity = Vector3.zero;
-                    isFlying = false;
-                    Destroy(gameObject, destroyDelay);
-                }
+            //while (rotated < 360f)
+            //{
+            //    float step = rotationSpeed * Time.deltaTime;
+            //    transform.Rotate(Vector3.up, step);
+            //    rotated += step;
+
+            //    // 180度回転したタイミングでスプライト変更
+            //    if (!hasSwitchedSprite && rotated >= 180f)
+            //    {
+            //        spriteRenderer.sprite = afterSprite;
+            //        hasSwitchedSprite = true;
+            //    }
+
+            //    yield return null;
+            //}
+        }
+
+        // プレイヤーと衝突した際の処理
+        void OnTriggerEnter(Collider other)
+        {
+            // プレイヤーと衝突したか判定（タグ使用）
+            if (other.CompareTag("Player"))
+            {
+                // プレイヤーの方向を取得
+                Vector3 dirToPlayer = (transform.position - other.transform.position).normalized;
+                Vector3 playerForward = other.transform.forward;
+                Vector3 playerRight = other.transform.right;
+
+                // 吹き飛び方向：プレイヤーの右前または左前方向を基準にランダム決定
+                bool goLeft = Random.value < 0.5f;
+
+                // 左前: forward - right / 右前: forward + right
+                Vector3 baseDirection = (goLeft) ?
+                    (playerForward - playerRight).normalized :
+                    (playerForward + playerRight).normalized;
+
+                // 吹き飛びベクトルにランダムなゆらぎを加える（にゃんこっぽく）
+                Vector3 randomOffset = new Vector3(
+                    0f,
+                    Random.Range(-0.5f, 0.5f), // 高さだけゆらぐ
+                    0f
+                );
+
+                Vector3 finalDirection = (baseDirection + randomOffset).normalized;
+
+                // 跳ねるように力を加える（にゃんこ的挙動）
+                Vector3 force = finalDirection * blowForce + Vector3.up * upwardForce;
+                rb.velocity = Vector3.zero; // 直前の速度をリセット
+                rb.AddForce(force, ForceMode.Impulse);
+
+                // スプライトを切り替える
+                StartCoroutine(RotateAndSwitchSprite());
+
+                // 力を止める処理＆消去をスケジュール
+                StartCoroutine(StopMovementAfterDelay());
+                Destroy(gameObject, destroyDelay);
             }
         }
 
-        void OnTriggerEnter(Collider other)
+        // 一定時間後に吹き飛びを停止する（力をゼロにする）
+        private IEnumerator StopMovementAfterDelay()
         {
-            if (hasReacted) return;
-            if (!other.CompareTag("Player")) return;
-
-            hasReacted = true;
-            isFlying = true;
-
-            Transform player = other.transform;
-
-            // 左前 or 右前に吹っ飛ぶ
-            Vector3 dir = Random.value < 0.5f ?
-                          (player.forward + player.right * 0.7f).normalized :
-                          (player.forward - player.right * 0.7f).normalized;
-
-            rb.AddForce(dir * forceMagnitude, ForceMode.Impulse);
+            yield return new WaitForSeconds(stopDelay);
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = true; // 完全に停止させる
         }
     }
+
 
 
     //public class NPCReaction : MonoBehaviour
