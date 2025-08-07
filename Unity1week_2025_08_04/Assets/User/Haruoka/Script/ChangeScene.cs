@@ -19,7 +19,7 @@ namespace Haruoka
             Debug.Log("SceneName:Title");
         }
 
-        public static void Load_ProlorueScene()
+        public static void Load_PrologueScene()
         {
             SceneManager.LoadScene("Prologue");
             Debug.Log("SceneName:Prologue");
