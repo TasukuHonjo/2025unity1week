@@ -20,6 +20,8 @@ namespace Honjo
 
         private void Update()
         {
+            if (!topViewCamera) { return; }
+            if (!driveCamera) { return; }
             if (topViewCamera.depth > driveCamera.depth)
             {
                 currentCamera = topViewCamera;
