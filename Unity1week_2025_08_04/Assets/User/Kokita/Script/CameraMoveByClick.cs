@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Haruoka; // ← ChangeScene クラスを使うために必要！
 
 public class CameraMoveByClick : MonoBehaviour
 {
@@ -7,10 +8,11 @@ public class CameraMoveByClick : MonoBehaviour
     public Transform[] comicFrames;
 
     [Header("カメラの移動速度")]
-    public float moveSpeed = 1f; // 値を下げるとゆっくりになる
+    public float moveSpeed = 1f;
 
     private int currentFrameIndex = 1;
     private bool isMoving = false;
+    private bool reachedFinalFrame = false;
 
     void Start()
     {
@@ -22,12 +24,28 @@ public class CameraMoveByClick : MonoBehaviour
 
     void Update()
     {
-        if (!isMoving && Input.GetMouseButtonDown(0))
+        if (isMoving) return;
+
+        // 最後のフレームまで到達して、さらにクリックされたらタイトルへ
+        if (reachedFinalFrame && Input.GetMouseButtonDown(0))
+        {
+            ChangeScene.Load_TitleScene();
+            return;
+        }
+
+        // 通常のコマ送り
+        if (Input.GetMouseButtonDown(0))
         {
             if (currentFrameIndex < comicFrames.Length)
             {
                 StartCoroutine(MoveToFrame(comicFrames[currentFrameIndex]));
                 currentFrameIndex++;
+
+                // 最後の移動であるか確認
+                if (currentFrameIndex >= comicFrames.Length)
+                {
+                    reachedFinalFrame = true;
+                }
             }
         }
     }
@@ -43,10 +61,7 @@ public class CameraMoveByClick : MonoBehaviour
         while (t < 1f)
         {
             t += Time.deltaTime * moveSpeed;
-
-            // イージング関数（ease in-out）
-            float easedT = t * t * (3f - 2f * t);
-
+            float easedT = t * t * (3f - 2f * t); // イージング
             transform.position = Vector3.Lerp(startPos, endPos, easedT);
             yield return null;
         }
