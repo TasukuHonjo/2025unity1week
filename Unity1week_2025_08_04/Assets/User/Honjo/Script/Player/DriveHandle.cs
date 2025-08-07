@@ -23,21 +23,18 @@ namespace Honjo
 
         private void Update()
         {
-            if (rb.velocity.magnitude > 0.5f)
+            // 左クリックで左旋回
+            if (Input.GetMouseButtonDown(1))
             {
-                // 左クリックで左旋回
-                if (Input.GetMouseButtonDown(1))
-                {
-                    ++click;
-                    targetYRotation += rotationPerClick;
-                }
+                ++click;
+                targetYRotation += rotationPerClick;
+            }
 
-                // 右クリックで右旋回
-                if (Input.GetMouseButtonDown(0))
-                {
-                    --click;
-                    targetYRotation -= rotationPerClick;
-                }
+            // 右クリックで右旋回
+            if (Input.GetMouseButtonDown(0))
+            {
+                --click;
+                targetYRotation -= rotationPerClick;
             }
 
             // 現在の角度を取得して補間

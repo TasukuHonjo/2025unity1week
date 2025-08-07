@@ -31,6 +31,11 @@ namespace Honjo
                 currentCamera = driveCamera;
             }
         }
+
+        public void SetDriveCamera()
+        {
+            currentCamera = driveCamera;
+        }
     }
 
 }
