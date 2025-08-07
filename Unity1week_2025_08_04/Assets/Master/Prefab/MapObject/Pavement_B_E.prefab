@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6810582067066590816}
   - component: {fileID: 1506424417468498341}
   - component: {fileID: 4807535507695540082}
-  - component: {fileID: 1018122520576217857}
   m_Layer: 0
   m_Name: Pavement_B_E
   m_TagString: Untagged
@@ -85,28 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1018122520576217857
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876700853592858217}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300078, guid: bca5c93adbc71744ca9ea932c796e900, type: 3}
 --- !u!1001 &551185189995142835
 PrefabInstance:
   m_ObjectHideFlags: 0

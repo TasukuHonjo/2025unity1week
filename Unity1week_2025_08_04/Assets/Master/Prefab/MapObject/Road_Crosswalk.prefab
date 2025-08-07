@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8372113346516712189}
   - component: {fileID: 1922610457797834954}
   - component: {fileID: 7718675387607877970}
-  - component: {fileID: 5750005756304315678}
   m_Layer: 0
   m_Name: Road_Crosswalk
   m_TagString: Untagged
@@ -85,28 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5750005756304315678
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3837970522676446453}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300036, guid: bca5c93adbc71744ca9ea932c796e900, type: 3}
 --- !u!1001 &925336652058997855
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7523130878401496207}
   - component: {fileID: 3562431894812133681}
   - component: {fileID: 6828078412936069832}
-  - component: {fileID: 9130336454870754119}
   m_Layer: 0
   m_Name: Road_Intersection_C
   m_TagString: Untagged
@@ -85,28 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &9130336454870754119
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3487649588585100324}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300012, guid: bca5c93adbc71744ca9ea932c796e900, type: 3}
 --- !u!1001 &4837603582845497773
 PrefabInstance:
   m_ObjectHideFlags: 0
