@@ -3463,8 +3463,8 @@ MonoBehaviour:
   chargeMaxTime: 5
   moveTimeMagnification: 5
   timer: {fileID: 100001134}
-  viewPortRectXY: {x: 0.01, y: 0.725}
-  viewPortRectWH: {x: 0.25, y: 0.25}
+  viewPortRectXY: {x: 0.01, y: 0.01}
+  viewPortRectWH: {x: 0.15, y: 0.15}
 --- !u!54 &1126095852
 Rigidbody:
   m_ObjectHideFlags: 0

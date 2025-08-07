@@ -31,12 +31,14 @@ namespace Honjo
 
         [SerializeField]private Vector2 viewPortRectXY = Vector2.zero;
         [SerializeField]private Vector2 viewPortRectWH = Vector2.zero;
+        private CameraManager camManager = null;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
             ry = GetComponent<RotationY>();
             dh = GetComponent<DriveHandle>();
+            
         }
 
         private void Start()
@@ -45,6 +47,7 @@ namespace Honjo
             timer.fillAmount = 0;
             ry.enabled = true;  //角度決めるフェーズ
             dh.enabled = false; //運転のフェーズ
+            camManager = GameObject.Find("Managers").GetComponent<CameraManager>();
         }
 
         private void Update()
@@ -90,6 +93,7 @@ namespace Honjo
                 startFg = false;
                 chargeTime = 0;
                 onesFg = true;
+                dh.enabled = false; //運転のフェーズ
                 return;
             }
             // Debug用RayをSceneビューに表示
@@ -104,6 +108,7 @@ namespace Honjo
             moveTime = chargeTime * moveTimeMagnification;
             if (!startFg) startFg = true;
             //topViewCamera.depth = -2;
+            camManager.SetDriveCamera();
             topViewCamera.rect = new Rect(viewPortRectXY.x, viewPortRectXY.y, viewPortRectWH.x, viewPortRectWH.y);
             ry.enabled = false;  //角度決めるフェーズ
             dh.enabled = true; //運転のフェーズ
