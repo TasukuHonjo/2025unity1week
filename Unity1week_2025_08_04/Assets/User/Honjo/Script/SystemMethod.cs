@@ -11,6 +11,12 @@ namespace Honjo
 
         public static SystemMethod instance; // インスタンスの定義
 
+        [SerializeField] float hitStopCoolTime = 3f;
+        bool hitStopFg = false;
+        bool hitStopActionFg = false;
+        float m_duration, m_slowTimeScale = 0f;
+        float time = 0;
+
         CameraShake driveCameraChaker = null;
         private void Awake()
         {
@@ -32,9 +38,33 @@ namespace Honjo
             driveCameraChaker = GameObject.Find("DriveCamera").GetComponent<CameraShake>();
         }
 
+        private void Update()
+        {
+            //ヒットストップが実行されたら
+            if (hitStopActionFg)
+            {
+                time += Time.deltaTime;
+                if(time > hitStopCoolTime)
+                {
+                    time = 0;
+                    hitStopActionFg = false;
+                }
+            }
+            if (hitStopActionFg) { return; }
+            if (hitStopFg)
+            {
+                hitStopActionFg = true;
+                hitStopFg = false;
+                StartCoroutine(pHitStop(m_duration, m_slowTimeScale));
+            }
+        }
+
         public void HitStop(float duration, float slowTimeScale = 0f)
         {
-            StartCoroutine(pHitStop(duration,slowTimeScale));
+            m_duration = duration;
+            m_slowTimeScale = slowTimeScale;
+            hitStopFg = true;
+            //StartCoroutine(pHitStop(duration,slowTimeScale));
         }
 
         IEnumerator pHitStop(float duration, float slowTimeScale = 0f)
