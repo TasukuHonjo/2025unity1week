@@ -1,118 +1,55 @@
+using Honjo;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Oosawa
 {
+
     public class NPCReaction : MonoBehaviour
     {
-        [Header("画像設定")]
-        [SerializeField] private Sprite defaultSprite; // 初期状態のスプライト
-        [SerializeField] private Sprite hitSprite;     // プレイヤーが接触したときに表示するスプライト
+        [Header("スプライト設定")]
+        public Sprite beforeSprite; // 衝突前の見た目
+        public Sprite afterSprite;  // 衝突後の見た目
 
-        [Header("挙動設定")]
         [SerializeField] private float rotateDuration = 0.3f;    // 回転アニメーションの時間
-        [SerializeField] private float destroyDelay = 1.0f;      // 削除までの時間
-        [SerializeField] private float launchForce = 5f;         // 飛ばすときの力
-        [SerializeField] private float stopAfterSeconds = 0.3f;  // 固定するまでの時間
 
-        private SpriteRenderer spriteRenderer; // スプライト描画用
-        private Rigidbody rb;                  // 物理挙動用
-        private Collider col;                  // 当たり判定用
-        private bool alreadyHit = false;       // 二重反応防止フラグ
+        [Header("吹き飛び挙動")]
+        public float blowForce = 30f;        // 水平方向の吹き飛び力
+        public float upwardForce = 2f;       // 上方向の跳ね力
+        public float stopDelay = 0.5f;       // 力を止めるまでの時間
+        public float destroyDelay = 1.5f;    // 消えるまでの時間
 
-        [Header("カメラ（未指定ならMainCamera）")]
-        public Transform cameraTransform;
-        public float forwardOffset = 15f;       // カメラの前方向に何メートル出すか
+        [Header("回転挙動")]
+        public float rotationSpeed = 400f; // Y軸回転速度（度/秒）
 
-        private bool followCamera = false;      // カメラに追従するかどうか
-        public float knockbackForce = 10f;
+        // 内部状態
+        private SpriteRenderer spriteRenderer;
+        private Rigidbody rb;
+        private Transform player;
 
-        private void Awake()
+        void Awake()
         {
-            // コンポーネント取得
+            // 必要なコンポーネント取得
             spriteRenderer = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody>();
-            col = GetComponent<Collider>();
 
             // 初期スプライト設定
-            if (defaultSprite != null)
-                spriteRenderer.sprite = defaultSprite;
+            spriteRenderer.sprite = beforeSprite;
 
-            // Rigidbody初期化（静的に）
-            if (rb != null)
-                rb.isKinematic = true;
-
-            // トリガー判定有効化（Colliderはぶつからず中に入るだけ）
-            if (col != null)
-                col.isTrigger = true;
-
-            // カメラが未設定ならMainCameraを使用
-            if (cameraTransform == null)
-            {
-                cameraTransform = Camera.main.transform;
-            }
+            // プレイヤーのTransform取得（タグで検索）
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
         }
 
-        private void OnTriggerEnter(Collider other)
+        // NPCをY軸で360度回転し、180度でスプライトを切り替える処理
+        private IEnumerator RotateAndSwitchSprite()
         {
-            // すでに処理されている or プレイヤー以外なら無視
-            if (alreadyHit) return;
-
-            // カメラに追従するフラグを有効化
-            followCamera = true; 
-
-            if (other.CompareTag("Player"))
-            {
-                alreadyHit = true;
-
-                // 当たり判定を無効化（多重反応を防ぐ）
-                if (col != null)
-                    col.enabled = false;
-
-                // コルーチンで演出スタート
-                StartCoroutine(HandleHit());
-            }
-        }
-
-        private void FixedUpdate()
-        {
-            if (followCamera)
-            {
-                // カメラの子に設定（ローカル位置を使いたいので false）
-                transform.SetParent(cameraTransform, false);
-
-                // カメラの前方向に forwardOffset 分だけ移動（ローカル空間）
-                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, forwardOffset);
-            }
-        }
-
-        private System.Collections.IEnumerator HandleHit()
-        {
-            // ランダムに左上または右上へ飛ばす
-            Vector3 direction = (Random.value < 0.5f) ? new Vector3(-10f, 1f, 0f) : new Vector3(10f, 1f, 0f);
-            direction.Normalize(); // 念のため正規化
-
-            if (rb != null)
-            {
-                rb.isKinematic = false; // 動かせるように
-                rb.velocity = Vector3.zero; // 念のため初期化
-                rb.AddForce(direction * launchForce, ForceMode.Impulse); // 力を加える
-            }
-
-            // 飛ばしたあと固定まで少し待機
-            yield return new WaitForSeconds(stopAfterSeconds);
-
-            if (rb != null)
-            {
-                rb.velocity = Vector3.zero;
-                rb.isKinematic = true;
-            }
-
             // 回転アニメーション（くるっと）
             float elapsed = 0f;
             Quaternion startRot = transform.rotation;
             Quaternion endRot = Quaternion.Euler(0, 180, 0) * startRot;
+
+            spriteRenderer.sprite = afterSprite;
 
             while (elapsed < rotateDuration)
             {
@@ -120,21 +57,57 @@ namespace Oosawa
                 elapsed += Time.deltaTime;
                 yield return null;
             }
+        }
 
-            transform.rotation = endRot;
+        // プレイヤーと衝突した際の処理
+        void OnTriggerEnter(Collider other)
+        {
+            // プレイヤーと衝突したか判定（タグ使用）
+            if (other.CompareTag("Player"))
+            {
+                // プレイヤーの方向を取得
+                Vector3 dirToPlayer = (transform.position - other.transform.position).normalized;
+                Vector3 playerForward = other.transform.forward;
+                Vector3 playerRight = other.transform.right;
 
-            // スプライト差し替え
-            if (hitSprite != null)
-                spriteRenderer.sprite = hitSprite;
+                // 吹き飛び方向：プレイヤーの右前または左前方向を基準にランダム決定
+                bool goLeft = Random.value < 0.5f;
 
-            // タグに応じたスコア加算
-            ScoreManager.Instance?.AddScoreByTag(gameObject.tag);
+                // 左前: forward - right / 右前: forward + right
+                Vector3 baseDirection = (goLeft) ?
+                    (playerForward - playerRight).normalized :
+                    (playerForward + playerRight).normalized;
 
-            // 一定時間後に削除
-            Destroy(gameObject, destroyDelay);
+                // 吹き飛びベクトルにランダムなゆらぎを加える（にゃんこっぽく）
+                Vector3 randomOffset = new Vector3(
+                    0f,
+                    Random.Range(-0.5f, 0.5f), // 高さだけゆらぐ
+                    0f
+                );
 
-            // カメラ追従フラグを無効化
-            followCamera = false;
+                Vector3 finalDirection = (baseDirection + randomOffset).normalized;
+
+                // 跳ねるように力を加える（にゃんこ的挙動）
+                Vector3 force = finalDirection * blowForce + Vector3.up * upwardForce;
+                rb.velocity = Vector3.zero; // 直前の速度をリセット
+                rb.AddForce(force, ForceMode.Impulse);
+
+                // スプライトを切り替える
+                StartCoroutine(RotateAndSwitchSprite());
+
+                // 力を止める処理＆消去をスケジュール
+                StartCoroutine(StopMovementAfterDelay());
+                Destroy(gameObject, destroyDelay);
+            }
+        }
+
+        // 一定時間後に吹き飛びを停止する（力をゼロにする）
+        private IEnumerator StopMovementAfterDelay()
+        {
+            yield return new WaitForSeconds(stopDelay);
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = true; // 完全に停止させる
         }
     }
 }
