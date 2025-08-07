@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Oosawa
 {
-
     public class NPCReaction : MonoBehaviour
     {
         [Header("スプライト設定")]
@@ -15,13 +14,16 @@ namespace Oosawa
         [SerializeField] private float rotateDuration = 0.3f;    // 回転アニメーションの時間
 
         [Header("吹き飛び挙動")]
-        public float blowForce = 30f;        // 水平方向の吹き飛び力
+        public float blowForce = 40f;        // 水平方向の吹き飛び力
         public float upwardForce = 2f;       // 上方向の跳ね力
         public float stopDelay = 0.4f;       // 力を止めるまでの時間
         public float destroyDelay = 2f;      // 消えるまでの時間
 
         [Header("回転挙動")]
         public float rotationSpeed = 400f; // Y軸回転速度（度/秒）
+
+        // プレイヤーが入ったかどうか
+        private bool isPlayerEntered = false;
 
         // 内部状態
         private SpriteRenderer spriteRenderer;
@@ -47,7 +49,7 @@ namespace Oosawa
             // 回転アニメーション（くるっと）
             float elapsed = 0f;
             Quaternion startRot = transform.rotation;
-            Quaternion endRot = Quaternion.Euler(0, 180, 0) * startRot;
+            Quaternion endRot = Quaternion.Euler(0, 360, 0) * startRot;
 
             spriteRenderer.sprite = afterSprite;
 
@@ -63,8 +65,10 @@ namespace Oosawa
         void OnTriggerEnter(Collider other)
         {
             // プレイヤーと衝突したか判定（タグ使用）
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && isPlayerEntered == false)
             {
+                isPlayerEntered = true; // プレイヤーが入ったフラグを立てる
+
                 // プレイヤーの方向を取得
                 Vector3 dirToPlayer = (transform.position - other.transform.position).normalized;
                 Vector3 playerForward = other.transform.forward;
