@@ -226,10 +226,10 @@ MonoBehaviour:
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 0
-  m_FillOrigin: 2
+  m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &100001135
@@ -663,13 +663,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164339639}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0905416, y: -0, z: -0, w: 0.9958927}
-  m_LocalPosition: {x: 0, y: 13.4, z: -19.02}
+  m_LocalRotation: {x: 0.16427295, y: 0, z: 0, w: 0.98641497}
+  m_LocalPosition: {x: 0, y: 15.16, z: -19.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1126095854}
-  m_LocalEulerAnglesHint: {x: 10.39, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 18.91, y: 0, z: 0}
 --- !u!4 &185159560 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4114379444542145249, guid: d183fd2dcfdb0d94a92cbba9833eaa76, type: 3}
