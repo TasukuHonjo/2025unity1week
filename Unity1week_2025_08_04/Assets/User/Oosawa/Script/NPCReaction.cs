@@ -84,16 +84,13 @@ namespace Oosawa
 
                 // カメラの前方向に forwardOffset 分だけ移動（ローカル空間）
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, forwardOffset);
-
-
-                followCamera = false; // 一度だけ追従するためフラグをリセット
             }
         }
 
         private System.Collections.IEnumerator HandleHit()
         {
             // ランダムに左上または右上へ飛ばす
-            Vector3 direction = (Random.value < 0.5f) ? new Vector3(-1f, 1f, 0f) : new Vector3(1f, 1f, 0f);
+            Vector3 direction = (Random.value < 0.5f) ? new Vector3(-10f, 1f, 0f) : new Vector3(10f, 1f, 0f);
             direction.Normalize(); // 念のため正規化
 
             if (rb != null)
