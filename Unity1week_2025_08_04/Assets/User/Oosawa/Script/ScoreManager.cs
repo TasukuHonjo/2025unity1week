@@ -1,53 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 namespace Oosawa
 {
     public class ScoreManager : MonoBehaviour
     {
-        public static ScoreManager Instance; // シングルトン
+        public GameObject score_object = null; // Textオブジェクト
+        public static ScoreManager instance; // シングルトンインスタンス
+        private int totalScore = 0; // 総スコア
 
-        private int totalScore = 0; // 累計スコア
-
-        // タグに対応するスコア表
-        [SerializeField]
-        private Dictionary<string, int> tagScoreTable = new Dictionary<string, int>()
-    {
-        { "Salaryman", 10 },
-        { "Officelady", 100 },
-        { "Schoolgirl", 1000 },
-        { "Grandmother", 10000 }
-    };
-
-        private void Awake()
+        void Awake()
         {
-            // シングルトンの初期化
-            if (Instance != null)
+            // シングルトンのインスタンスを設定
+            if (instance == null)
             {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // シーン遷移しても破棄されないようにする
-        }
-
-        // タグに応じてスコアを加算する関数
-        public void AddScoreByTag(string tag)
-        {
-            if (tagScoreTable.ContainsKey(tag))
-            {
-                totalScore += tagScoreTable[tag];
-                Debug.Log($"Score Added! Current Score: {totalScore}");
+                instance = this;
+                DontDestroyOnLoad(gameObject); // シーン遷移時にオブジェクトを破棄しない
             }
             else
             {
-                Debug.LogWarning($"Tag '{tag}' not found in score table.");
+                Destroy(gameObject); // 既に存在する場合は新しいインスタンスを破棄
             }
         }
 
-        // 現在のスコアを取得する関数（外部参照用）
-        public int GetTotalScore() => totalScore;
+        void Update()
+        {
+            // オブジェクトからTextコンポーネントを取得
+            TextMeshProUGUI score_text = score_object.GetComponent<TextMeshProUGUI>();
+            // テキストの表示を入れ替える
+            score_text.text = "Score: " + totalScore.ToString("N0"); // 数値をカンマ区切りで表示
+        }
+
+        // スコア加算
+        public void AddScore(int amount)
+        {
+            totalScore += amount;
+            Debug.Log("現在のスコア: " + totalScore);
+        }
     }
 }

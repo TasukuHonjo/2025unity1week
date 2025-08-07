@@ -17,8 +17,8 @@ namespace Oosawa
         [Header("‚«”ò‚Ñ‹““®")]
         public float blowForce = 30f;        // …•½•ûŒü‚Ì‚«”ò‚Ñ—Í
         public float upwardForce = 2f;       // ã•ûŒü‚Ì’µ‚Ë—Í
-        public float stopDelay = 0.5f;       // —Í‚ğ~‚ß‚é‚Ü‚Å‚ÌŠÔ
-        public float destroyDelay = 1.5f;    // Á‚¦‚é‚Ü‚Å‚ÌŠÔ
+        public float stopDelay = 0.4f;       // —Í‚ğ~‚ß‚é‚Ü‚Å‚ÌŠÔ
+        public float destroyDelay = 2f;      // Á‚¦‚é‚Ü‚Å‚ÌŠÔ
 
         [Header("‰ñ“]‹““®")]
         public float rotationSpeed = 400f; // Y²‰ñ“]‘¬“xi“x/•bj
