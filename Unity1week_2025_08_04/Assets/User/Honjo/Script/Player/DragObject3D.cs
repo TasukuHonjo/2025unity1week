@@ -18,6 +18,7 @@ namespace Honjo
         Vector3 latePos, currentPos;
         float value = 0f;
         [SerializeField] float maxValue = 100;
+        [SerializeField] float dragValue = 1.5f;
         [SerializeField] Image timer;
 
         void Start()
@@ -56,13 +57,13 @@ namespace Honjo
                     dragObj.transform.position = targetPos;
                 }
 
-                if (Mathf.Abs(currentPos.x - latePos.x) > 1)
+                if (Mathf.Abs(currentPos.x - latePos.x) > 0.25f)
                 {
-                    value += Mathf.Abs(currentPos.x - latePos.x);
+                    value += Mathf.Abs(currentPos.x - latePos.x) * dragValue;
                 }
-                if(Mathf.Abs(currentPos.z - latePos.z) > 1)
+                if(Mathf.Abs(currentPos.z - latePos.z) > 0.25f)
                 {
-                    value += Mathf.Abs(currentPos.z - latePos.z);
+                    value += Mathf.Abs(currentPos.z - latePos.z) * dragValue;
                 }
 
                 if (value > maxValue) { value = maxValue; }

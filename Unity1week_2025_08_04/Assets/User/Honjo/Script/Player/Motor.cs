@@ -21,7 +21,7 @@ namespace Honjo
         private bool onesFg = false;//一回だけ
 
         [SerializeField]Camera topViewCamera = null;
-        private float chargeTime = 0;
+        //private float chargeTime = 0;
         [SerializeField]private float chargeMaxTime = 30;
         [SerializeField] private float moveTimeMagnification = 1;
         [SerializeField] Image timer;
@@ -30,16 +30,16 @@ namespace Honjo
         private RotationY ry = null;
         private DriveHandle dh = null;
 
-        //[SerializeField]private Vector2 viewPortRectXY = Vector2.zero;
-        //[SerializeField]private Vector2 viewPortRectWH = Vector2.zero;
-        //private CameraManager camManager = null;
+        [SerializeField]AudioClip SE_Car_Drift;
+        [SerializeField]AudioClip SE_Track_Engine_Moving;
+        AudioSource m_as;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
             ry = GetComponent<RotationY>();
             dh = GetComponent<DriveHandle>();
-            
+            m_as = GetComponent<AudioSource>();
         }
 
         private void Start()
@@ -93,7 +93,7 @@ namespace Honjo
             {
                 time = 0;
                 startFg = false;
-                chargeTime = 0;
+                //chargeTime = 0;
                 onesFg = true;
                 dh.enabled = false; //運転のフェーズ
                 return;
@@ -116,6 +116,8 @@ namespace Honjo
             ry.enabled = false;  //角度決めるフェーズ
             dh.enabled = true; //運転のフェーズ
             dh.SetTargetYRotation(transform.eulerAngles.y);
+            m_as.clip = SE_Track_Engine_Moving;
+            m_as.Play();
         }
     }
 }
