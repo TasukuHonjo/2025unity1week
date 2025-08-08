@@ -11,7 +11,7 @@ namespace Oosawa
         public GameObject score_object = null; // Textオブジェクト
         public static ScoreManager instance; // シングルトンインスタンス
         private int totalScore = 0; // 総スコア
-
+        TextMeshProUGUI score_text;
         void Awake()
         {
             // シングルトンのインスタンスを設定
@@ -26,10 +26,14 @@ namespace Oosawa
             }
         }
 
-        void Update()
+        void Start()
         {
             // オブジェクトからTextコンポーネントを取得
-            TextMeshProUGUI score_text = score_object.GetComponent<TextMeshProUGUI>();
+            score_text = score_object.GetComponent<TextMeshProUGUI>();
+        }
+
+        void Update()
+        {
             // テキストの表示を入れ替える
             score_text.text = "Score: " + totalScore.ToString("N0"); // 数値をカンマ区切りで表示
         }
