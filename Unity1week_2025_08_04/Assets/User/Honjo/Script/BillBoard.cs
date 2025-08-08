@@ -10,7 +10,7 @@ namespace Honjo
 
         private void Start()
         {
-            cameraManager = GameObject.Find("Managers").GetComponent<CameraManager>();
+            cameraManager = GameObject.Find("GameSystemManagers").GetComponent<CameraManager>();
         }
 
         void Update()
