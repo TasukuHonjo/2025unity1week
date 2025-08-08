@@ -30,6 +30,7 @@ namespace Oosawa
         {
             // オブジェクトからTextコンポーネントを取得
             score_text = score_object.GetComponent<TextMeshProUGUI>();
+            totalScore = 0;
         }
 
         void Update()
