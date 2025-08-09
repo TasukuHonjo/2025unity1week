@@ -892,7 +892,7 @@ GameObject:
   - component: {fileID: 2335945778076347325}
   - component: {fileID: 2265164974750484826}
   - component: {fileID: 8802208690383207248}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TruckPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -991,6 +991,7 @@ MonoBehaviour:
   miniMap: {fileID: 8902266440288414825}
   SE_Car_Drift: {fileID: 8300000, guid: 2aa7490644893d6408eef3cd7e87db4c, type: 3}
   SE_Track_Engine_Moving: {fileID: 8300000, guid: 098ed77172fa0fa4a9f5177ee1b54f6c, type: 3}
+  driveEndFg: 0
 --- !u!114 &8331538056759323636
 MonoBehaviour:
   m_ObjectHideFlags: 0
