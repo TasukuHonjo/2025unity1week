@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -37,6 +38,9 @@ namespace Honjo
 
         private float engineSmallChange = 5;
 
+        private float fadeTime = 3;
+        private float time1 = 0;
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
@@ -58,6 +62,15 @@ namespace Honjo
 
         private void Update()
         {
+
+            time1 += Time.deltaTime;
+            if (fadeTime < time1) { time1 = fadeTime; }
+            float normalized = time1 / fadeTime;
+            normalized = Mathf.Clamp01(normalized); // îOÇÃÇΩÇﬂ 0?1 Ç…êßå¿
+            m_as.volume = normalized;
+            
+
+
             //ë¨ìxè„å¿
             if (rb.velocity.magnitude > maxSpeed)
             {
@@ -68,14 +81,7 @@ namespace Honjo
             if (startFg) { return; }
             if (onesFg) { return; };
 
-            if (Input.GetMouseButton(0))
-            {
-                //chargeTime += Time.deltaTime;
-                //if(chargeTime > chargeMaxTime) { chargeTime = chargeMaxTime; }
-                //float normalized = (chargeTime * moveTimeMagnification) / (chargeMaxTime * moveTimeMagnification);
-                //normalized = Mathf.Clamp01(normalized); // îOÇÃÇΩÇﬂ 0?1 Ç…êßå¿
-                //timer.fillAmount = normalized;
-            }
+            
 
             if (Input.GetMouseButtonUp(0))
             {
