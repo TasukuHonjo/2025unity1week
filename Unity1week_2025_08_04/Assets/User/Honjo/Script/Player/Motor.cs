@@ -23,8 +23,8 @@ namespace Honjo
 
         [SerializeField]Camera topViewCamera = null;
         //private float chargeTime = 0;
-        [SerializeField]private float chargeMaxTime = 30;
-        [SerializeField] private float moveTimeMagnification = 1;
+        //[SerializeField]private float chargeMaxTime = 30;
+        //[SerializeField] private float moveTimeMagnification = 1;
         [SerializeField] Image timer;
         [SerializeField] RawImage miniMap;
 
@@ -38,8 +38,9 @@ namespace Honjo
 
         private float engineSmallChange = 5;
 
-        private float fadeTime = 3;
+        private float fadeTime = 3; 
         private float time1 = 0;
+        private bool openingPerformanceFg = false;//ââèoÇ™èIÇÌÇ¡ÇΩÇ©Ç«Ç§Ç©åüím
 
         private void Awake()
         {
@@ -83,7 +84,7 @@ namespace Honjo
 
             
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0)&& openingPerformanceFg)
             {
                 DriveFg();
             }
@@ -122,7 +123,7 @@ namespace Honjo
             rb.AddForce(transform.forward * power, ForceMode.Force);
         }
 
-        public void DriveFg()
+        private void DriveFg()
         {
             //moveTime = chargeMaxTime * moveTimeMagnification * timer.fillAmount;
             if (!startFg) startFg = true;
@@ -133,6 +134,11 @@ namespace Honjo
             dh.SetTargetYRotation(transform.eulerAngles.y);
             m_as.clip = SE_Track_Engine_Moving;
             m_as.Play();
+        }
+
+        public void OpeningPerformanceFg()
+        {
+            openingPerformanceFg = true;
         }
     }
 }
