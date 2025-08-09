@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 3734330716853893903}
   - component: {fileID: 6454829929292051439}
   - component: {fileID: 3921493217362598668}
+  - component: {fileID: 4278060866862749090}
   m_Layer: 0
   m_Name: GameSystemManagers
   m_TagString: Untagged
@@ -270,6 +271,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitStopCoolTime: 3
+--- !u!114 &4278060866862749090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483731183692403216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88e721687dd0dd4ba8f84fc56391518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  motor: {fileID: 1727285284604836336}
 --- !u!1 &1293154715925470241
 GameObject:
   m_ObjectHideFlags: 0
