@@ -65,7 +65,7 @@ namespace Oosawa
         {
             // テキストの表示を入れ替える
 
-            if(score_text) score_text.text = "Score: " + totalScore.ToString("N0"); // 数値をカンマ区切りで表示
+            if(score_text) score_text.text = "スコア:" + totalScore.ToString("N0"); // 数値をカンマ区切りで表示
 
 #if UNITY_EDITOR
             Debug.Log("スコア："+totalScore + "\n合計人数："+totalPeople);
