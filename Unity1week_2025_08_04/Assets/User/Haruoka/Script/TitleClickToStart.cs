@@ -1,18 +1,18 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
-using Haruoka; // ChangeScene.cs‚ğg‚¤‚½‚ß
+using Haruoka; // ChangeScene.csã‚’ä½¿ã†ãŸã‚
 
 public class TitleClickToStartWithFade : MonoBehaviour
 {
-    [Header("ƒtƒF[ƒh—p‚Ì•‰æ‘œ")]
+    [Header("ãƒ•ã‚§ãƒ¼ãƒ‰ç”¨ã®é»’ç”»åƒ")]
     public Image fadeImage;
 
-    [Header("ƒtƒF[ƒh‘¬“xi•bj")]
+    [Header("ãƒ•ã‚§ãƒ¼ãƒ‰é€Ÿåº¦ï¼ˆç§’ï¼‰")]
     public float fadeDuration = 1.0f;
 
-    [Header("Œø‰Ê‰¹")]
+    [Header("åŠ¹æœéŸ³")]
     [SerializeField] private AudioSource seAudioSource;
     [SerializeField] private AudioClip clickSoundClip;
 
@@ -22,17 +22,17 @@ public class TitleClickToStartWithFade : MonoBehaviour
     {
         if (fadeImage != null)
         {
-            // Å‰‚ÉŠ®‘S‚É• ¨ ƒtƒF[ƒhƒCƒ“
+            // æœ€åˆã«å®Œå…¨ã«é»’ â†’ ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
             Color c = fadeImage.color;
             c.a = 1f;
             fadeImage.color = c;
             StartCoroutine(FadeIn());
         }
 
-        // SEAudioSource‚Ìİ’èŠm”F
+        // SEAudioSourceã®è¨­å®šç¢ºèª
         if (seAudioSource != null)
         {
-            Debug.Log($"SE AudioSourceİ’èŠm”F - Volume: {seAudioSource.volume}, Enabled: {seAudioSource.enabled}");
+            Debug.Log($"SE AudioSourceè¨­å®šç¢ºèª - Volume: {seAudioSource.volume}, Enabled: {seAudioSource.enabled}");
         }
     }
 
@@ -45,13 +45,8 @@ public class TitleClickToStartWithFade : MonoBehaviour
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            Debug.Log("ƒ^ƒCƒgƒ‹‰æ–Ê‚ÅƒNƒŠƒbƒN‚³‚ê‚Ü‚µ‚½");
-
-            // ƒNƒŠƒbƒN‰¹‚ğÄ¶
-            PlayClickSound();
-
-            // ƒtƒF[ƒhƒAƒEƒg ¨ ƒQ[ƒ€ƒV[ƒ“‚Ö
-            StartCoroutine(FadeOutAndChangeScene());
+            Debug.Log("ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã§ã‚¯ãƒªãƒƒã‚¯ã•ã‚Œã¾ã—ãŸ");
+            StartCoroutine(PlaySEAndFadeOut());
         }
     }
 
@@ -59,12 +54,12 @@ public class TitleClickToStartWithFade : MonoBehaviour
     {
         if (seAudioSource != null && clickSoundClip != null)
         {
-            Debug.Log("ƒNƒŠƒbƒN‰¹‚ğÄ¶’†...");
+            Debug.Log("ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’å†ç”Ÿä¸­...");
             seAudioSource.PlayOneShot(clickSoundClip);
         }
         else
         {
-            Debug.LogWarning("AudioSource‚Ü‚½‚ÍAudioClip‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+            Debug.LogWarning("AudioSourceã¾ãŸã¯AudioClipãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“");
             if (seAudioSource == null) Debug.LogWarning("seAudioSource is null");
             if (clickSoundClip == null) Debug.LogWarning("clickSoundClip is null");
         }
@@ -83,9 +78,14 @@ public class TitleClickToStartWithFade : MonoBehaviour
         SetFadeAlpha(0f);
     }
 
-    IEnumerator FadeOutAndChangeScene()
+    IEnumerator PlaySEAndFadeOut()
     {
         isTransitioning = true;
+
+        // SEå†ç”Ÿé–‹å§‹
+        PlayClickSound();
+
+        // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã¨åŒæ™‚é€²è¡Œ
         float t = 0f;
         while (t < fadeDuration)
         {
@@ -96,7 +96,16 @@ public class TitleClickToStartWithFade : MonoBehaviour
         }
         SetFadeAlpha(1f);
 
-        // ƒtƒF[ƒhƒAƒEƒgŠ®—¹Œã‚ÉƒQ[ƒ€ƒV[ƒ“‚Ö
+        // ãƒ•ã‚§ãƒ¼ãƒ‰å®Œäº†å¾Œã€SEãŒé³´ã‚Šçµ‚ã‚ã‚‹ã¾ã§å¾…ã¤
+        if (seAudioSource != null && seAudioSource.isPlaying)
+        {
+            while (seAudioSource.isPlaying)
+            {
+                yield return null;
+            }
+        }
+
+        // ã‚·ãƒ¼ãƒ³é·ç§»
         ChangeScene.Load_GameScene();
     }
 
