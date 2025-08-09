@@ -1,8 +1,10 @@
 using Oosawa;
+using unityroom.Api;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
+
 
 namespace Honjo
 {
@@ -21,7 +23,7 @@ namespace Honjo
         {   
             //ヒエラルキーからスコアマネージャー取得
             scoreManager = GameObject.FindObjectOfType<ScoreManager>();
-            
+            RankingToHighScore();
         }
 
         private void RankingToHighScore()
@@ -31,6 +33,10 @@ namespace Honjo
             {
                 highScore = totalScore;
                 //ランキングに反映させる処理
+                // C#スクリプトの冒頭に `using unityroom.Api;` を追加してください。
+
+                // ボードNo1にスコア123.45fを送信する。
+                UnityroomApiClient.Instance.SendScore(1, highScore, ScoreboardWriteMode.Always);
             }
         }
 
