@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Oosawa.ScoreManager;
 
 namespace Oosawa
 {
@@ -26,19 +27,19 @@ namespace Oosawa
                 switch (gameObject.tag)
                 {
                     case "Salaryman":
-                        ScoreManager.instance.AddScore(salaryman);
+                        ScoreManager.instance.AddScore(salaryman, PeopleTag.Salaryman);
                         break;
                     case "Office lady":
-                        ScoreManager.instance.AddScore(officelady);
+                        ScoreManager.instance.AddScore(officelady, PeopleTag.Officelady);
                         break;
                     case "Grandmother":
-                        ScoreManager.instance.AddScore(grandmother);
+                        ScoreManager.instance.AddScore(grandmother, PeopleTag.Grandmother);
                         break;
                     case "Schoolgirl":
-                        ScoreManager.instance.AddScore(schoolgirl);
+                        ScoreManager.instance.AddScore(schoolgirl, PeopleTag.Schoolgirl);
                         break;
                     case "Schoolboy":
-                        ScoreManager.instance.AddScore(schoolboy);
+                        ScoreManager.instance.AddScore(schoolboy, PeopleTag.Schoolboy);
                         break;
                     default:
                         Debug.LogWarning("Unknown tag: " + gameObject.tag);
