@@ -33,6 +33,9 @@ namespace Honjo
         [SerializeField]AudioClip SE_Car_Drift;
         [SerializeField]AudioClip SE_Track_Engine_Moving;
         AudioSource m_as;
+        public bool driveEndFg = false;//運転の終了を意味する:ゲームマネージャがこいつを監視する
+
+        private float engineSmallChange = 5;
 
         private void Awake()
         {
@@ -50,6 +53,7 @@ namespace Honjo
             dh.enabled = false; //運転のフェーズ
             //camManager = GameObject.Find("Managers").GetComponent<CameraManager>();
             miniMap.enabled = false;
+            driveEndFg = false;
         }
 
         private void Update()
@@ -88,6 +92,12 @@ namespace Honjo
             normalized = Mathf.Clamp01(normalized); // 念のため 0?1 に制限
             timer.fillAmount = normalized;
 
+            if(moveTime - time <= engineSmallChange)
+            {
+                float _nomalized = (moveTime - time) / engineSmallChange;
+                _nomalized = Mathf.Clamp01(_nomalized);
+                m_as.volume = _nomalized;
+            }
 
             if (time > moveTime) 
             {
@@ -96,6 +106,7 @@ namespace Honjo
                 //chargeTime = 0;
                 onesFg = true;
                 dh.enabled = false; //運転のフェーズ
+                driveEndFg = true;//運転終了
                 return;
             }
             // Debug用RayをSceneビューに表示
