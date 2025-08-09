@@ -27,8 +27,18 @@ namespace Haruoka
 
         public static void Load_GameScene()
         {
-            SceneManager.LoadScene("Game");
-            Debug.Log("SceneName:Game");
+            int currentIndex = SceneManager.GetActiveScene().buildIndex;
+            int nextIndex = currentIndex + 1;
+
+            // シーン数を超えないようにチェック
+            if (nextIndex < SceneManager.sceneCountInBuildSettings)
+            {
+                SceneManager.LoadScene(nextIndex);
+            }
+            else
+            {
+                Debug.Log("次のシーンがありません！");
+            }
         }
 
         public static void Load_ResultScene()

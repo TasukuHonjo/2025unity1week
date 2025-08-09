@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7d6f481e4ce03a4428fa7c698f8e6be6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a68f6d528a272bc48984ff62deec5867, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -770,14 +770,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4943396, g: 0.4943396, b: 0.4943396, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7d6f481e4ce03a4428fa7c698f8e6be6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d2284351975358f419e027915fe9a290, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -904,7 +904,6 @@ GameObject:
   - component: {fileID: 8331538056759323636}
   - component: {fileID: 3604063951886197848}
   - component: {fileID: 2335945778076347325}
-  - component: {fileID: 2265164974750484826}
   - component: {fileID: 8802208690383207248}
   m_Layer: 7
   m_Name: TruckPlayer
@@ -1045,26 +1044,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationPerClick: 7.5
---- !u!114 &2265164974750484826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2907795014540950501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec174901efd3be5438e4ff75c47acb73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  dragObj: {fileID: 5467144699662122984}
-  maxDistance: 15
-  maxValue: 100
-  dragValue: 0.5
-  timer: {fileID: 8853981949261064685}
 --- !u!82 &8802208690383207248
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1563,10 +1542,5 @@ PrefabInstance:
 --- !u!4 &5467144699661951944 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400014, guid: ccb9255796f85d8438739116864d17b4, type: 3}
-  m_PrefabInstance: {fileID: 5467144699662088518}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5467144699662122984 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100014, guid: ccb9255796f85d8438739116864d17b4, type: 3}
   m_PrefabInstance: {fileID: 5467144699662088518}
   m_PrefabAsset: {fileID: 0}

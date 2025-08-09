@@ -48,7 +48,7 @@ namespace Honjo
         private void Start()
         {
             time = 0;
-            timer.fillAmount = 0;
+            timer.fillAmount = 1;
             ry.enabled = true;  //角度決めるフェーズ
             dh.enabled = false; //運転のフェーズ
             //camManager = GameObject.Find("Managers").GetComponent<CameraManager>();
@@ -88,7 +88,7 @@ namespace Honjo
             if (!startFg) return;
                 time += Time.fixedDeltaTime;
 
-            float normalized = (moveTime - time) / (chargeMaxTime * moveTimeMagnification);
+            float normalized = (moveTime - time) / moveTime;
             normalized = Mathf.Clamp01(normalized); // 念のため 0?1 に制限
             timer.fillAmount = normalized;
 
@@ -118,12 +118,10 @@ namespace Honjo
 
         public void DriveFg()
         {
-            moveTime = chargeMaxTime * moveTimeMagnification * timer.fillAmount;
+            //moveTime = chargeMaxTime * moveTimeMagnification * timer.fillAmount;
             if (!startFg) startFg = true;
             topViewCamera.depth = -2;
-            //camManager.SetDriveCamera();
             miniMap.enabled = true;
-            //topViewCamera.rect = new Rect(viewPortRectXY.x, viewPortRectXY.y, viewPortRectWH.x, viewPortRectWH.y);
             ry.enabled = false;  //角度決めるフェーズ
             dh.enabled = true; //運転のフェーズ
             dh.SetTargetYRotation(transform.eulerAngles.y);
