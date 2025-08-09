@@ -27,6 +27,8 @@ namespace Oosawa
         public static List<PeopleTag> peopleTags = new List<PeopleTag>();
 
         TextMeshProUGUI score_text;
+
+
         void Awake()
         {
             // シングルトンのインスタンスを設定
@@ -53,6 +55,10 @@ namespace Oosawa
                 peopleTags.Clear();
             }
 
+            if(SceneManager.GetActiveScene().name == "Result")
+            {
+                peopleTags.Sort();
+            }
         }
 
         void Update()
@@ -74,5 +80,7 @@ namespace Oosawa
             peopleTags.Add(peopleTag);
             Debug.Log("現在のスコア: " + totalScore);
         }
+
+
     }
 }
