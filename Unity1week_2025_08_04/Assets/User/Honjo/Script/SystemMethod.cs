@@ -17,6 +17,8 @@ namespace Honjo
         float m_duration, m_slowTimeScale = 0f;
         float time = 0;
 
+        public Material skyboxMaterial;
+
         CameraShake driveCameraChaker = null;
         private void Awake()
         {
@@ -36,6 +38,10 @@ namespace Honjo
         private void Start()
         {
             driveCameraChaker = GameObject.Find("DriveCamera").GetComponent<CameraShake>();
+
+            RenderSettings.skybox = skyboxMaterial;
+            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Skybox;
+            DynamicGI.UpdateEnvironment();
         }
 
         private void Update()

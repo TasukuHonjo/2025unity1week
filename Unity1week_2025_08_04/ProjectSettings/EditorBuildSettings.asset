@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/User/Haruoka/Scene/Title.unity
     guid: aabe3daae4a2ee24e957b753cb90ad0d
   - enabled: 1
+    path: Assets/User/Honjo/Stage0.unity
+    guid: f29f79bff82efec43885cbfe51e62764
+  - enabled: 1
     path: Assets/User/Haruoka/Scene/Game.unity
     guid: 1fd9bdb95e570d24592e710db683be52
   - enabled: 1
