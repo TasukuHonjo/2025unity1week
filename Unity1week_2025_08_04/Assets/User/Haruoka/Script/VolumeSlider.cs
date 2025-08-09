@@ -46,7 +46,8 @@ public class SEVolumeSlider : MonoBehaviour
 
     private void ApplyVolume(float value)
     {
-        float volumeDb = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
+        // -10dBのオフセットを追加して全体的に音量を下げる
+        float volumeDb = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20 - 10f;
         audioMixer.SetFloat(exposedParam, volumeDb);
         PlayerPrefs.SetFloat(exposedParam, value);
     }
